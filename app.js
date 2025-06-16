@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import Nrouter from "./Routes/notes.router.js";
 import "./Model/association.js";
 import Brouter from "./Routes/books.router.js";
+import cartRouter from "./Routes/cart.router.js";
+
 
 const app = express();
 
@@ -20,6 +22,10 @@ app.use("/note", Nrouter)
 
 // books ko save 
 app.use("/Books", Brouter)
+
+
+
+app.use("/cart", cartRouter);
 
 app.listen(3000, () => {
     console.log("Server started")

@@ -5,11 +5,6 @@ import { storage } from "../Routes/notes.router.js";
 
 export const uploadNotes = async (request, response) => {
     try {
-        // console.log("=== DEBUG ===");
-        // console.log("request.params:", request.params);
-        // console.log("request.file:", request.file);
-        // console.log("request.body:", request.body);
-        // console.log("==============");
 
         const { title } = request.body;
         const userId = parseInt(request.params.userId);
@@ -50,6 +45,7 @@ export const getAllNotes = async (req, res) => {
 export const getNoteId = async (request, response) => {
     try {
         let id = parseInt(request.params.userId);
+
         let Note = await notes.findAll({
             where: {
                 userId: id
@@ -69,6 +65,9 @@ export const deleteById = async (request, response) => {
             where: {
                 userId: id
             }
+
+            // delete from notes where userId=? ;
+
         })
         return response.status(201).json({ message: "Delete successs !" })
     } catch (err) {
@@ -104,8 +103,8 @@ export const updateNote = async (request, response) => {
         console.log(fileName)
 
         const updateFields = {
-            ...(newtitle && { title: newtitle }),
-            ...(fileName && { file_name: fileName })
+            ...({ title: newtitle }),
+            ...({ file_name: fileName })
         };
 
         const result = await notes.update(updateFields, {
